@@ -1,0 +1,106 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": "2c961ef5-c982-9bc6-43d5-d2cb2f7ea496",
+          "workspaceId": "00000000-0000-0000-0000-000000000000"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "nb_raw_to_silver",
+        "description": "ingest data from raw to silver",
+        "dependsOn": []
+      },
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": "060b726e-1e40-af01-4280-3933dac48fee",
+          "workspaceId": "00000000-0000-0000-0000-000000000000"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "nb_silver_to_gold",
+        "dependsOn": [
+          {
+            "activity": "nb_raw_to_silver",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Office365Email",
+        "typeProperties": {
+          "body": "<p>Pipeline Global Superstore completed successfully.</p>\n<p><br></p>\n<p>RunId: @{pipeline().RunId}</p>\n<p>Start time: @{pipeline().TriggerTime}</p>\n<p><br></p>",
+          "to": "dv.nttan98@gmail.com",
+          "subject": "Fabric Pipeline Global Superstore - SUCCESS"
+        },
+        "externalReferences": {
+          "connection": "ad63a363-c3e4-4224-8245-754f37d3fb10"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "email_success",
+        "dependsOn": [
+          {
+            "activity": "nb_silver_to_gold",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Office365Email",
+        "typeProperties": {
+          "body": "<p>Pipeline Global Superstore FAILED.</p>\n<p>RunId: @{pipeline().RunId}</p>\n<p>Start time: @{pipeline().TriggerTime}</p>\n<p><br></p>",
+          "to": "dv.nttan98@gmail.com",
+          "subject": "Fabric Pipeline Global Superstore - FAILED"
+        },
+        "externalReferences": {
+          "connection": "ad63a363-c3e4-4224-8245-754f37d3fb10"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "email_fail",
+        "dependsOn": [
+          {
+            "activity": "nb_silver_to_gold",
+            "dependencyConditions": [
+              "Failed"
+            ]
+          },
+          {
+            "activity": "nb_raw_to_silver",
+            "dependencyConditions": [
+              "Failed"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

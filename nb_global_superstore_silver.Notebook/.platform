@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "nb_global_superstore_silver"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "2c961ef5-c982-9bc6-43d5-d2cb2f7ea496"
+  }
+}
