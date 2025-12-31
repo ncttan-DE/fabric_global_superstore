@@ -1,0 +1,41 @@
+{
+  "formatVersion": "202502",
+  "computeEngineSettings": {},
+  "name": "df_gen2",
+  "queryGroups": [],
+  "documentLocale": "en-US",
+  "queriesMetadata": {
+    "departments csv": {
+      "queryId": "0da938a2-8f70-4336-86f1-96b5cdfcdf78",
+      "queryName": "departments csv"
+    },
+    "employees csv": {
+      "queryId": "bdc6469e-4649-47e8-ac96-01c67bfe2d2e",
+      "queryName": "employees csv"
+    },
+    "Merge": {
+      "queryId": "19f3b41e-9a22-4b4b-a07c-cbb924e47cfc",
+      "queryName": "Merge",
+      "loadEnabled": false
+    },
+    "DefaultDestination": {
+      "queryId": "94f910b0-7987-4d06-909a-4b6c4d9fed60",
+      "queryName": "DefaultDestination",
+      "isHidden": true,
+      "loadEnabled": false
+    },
+    "Merge_DataDestination": {
+      "queryId": "768efb0c-931b-4c60-9be2-346a66bd95f6",
+      "queryName": "Merge_DataDestination",
+      "isHidden": true,
+      "loadEnabled": false
+    }
+  },
+  "connections": [
+    {
+      "path": "Lakehouse",
+      "kind": "Lakehouse",
+      "connectionId": "{\"ClusterId\":\"83f0f459-eb95-44f4-8168-bbfe0eaefbb2\",\"DatasourceId\":\"9de85c79-0bc6-4e09-8c5c-73d3b80f9a62\"}"
+    }
+  ]
+}
